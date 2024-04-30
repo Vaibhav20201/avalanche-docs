@@ -57,8 +57,8 @@ _To connect to the Fuji Testnet instead of the main net, use argument `--network
 Also it's worth pointing out that
 [it only needs 1 AVAX to become a validator on the Fuji Testnet](/nodes/validate/what-is-staking.md)
 and you can get the test token from the [faucet](https://faucet.avax.network/). If you already have an AVAX
-balance greater than zero on Mainnet, paste your C-Chain address there, and request test tokens. Otherwise, 
-please request a faucet coupon on 
+balance greater than zero on Mainnet, paste your C-Chain address there, and request test tokens. Otherwise,
+please request a faucet coupon on
 [Guild](https://guild.xyz/avalanche). Admins and mods on the official [Discord](https://discord.com/invite/RwXY7P6)
 can provide testnet AVAX if developers are unable to obtain it from the other two options.
 
@@ -90,7 +90,7 @@ The user is going to need this ID in the later section when calling [addValidato
 :::info
 
 With more data on `Fuji`, it may take a while to bootstrap `Fuji` Testnet from scratch.
-You can use [State-Sync](/nodes/configure/chain-config-flags.md#state-sync-enabled-boolean)
+You can use [State-Sync](/nodes/configure/chain-configs/C.md#state-sync-enabled)
 to shorten the time for bootstrapping.
 
 :::
@@ -221,10 +221,10 @@ the use of a ledger device is strongly recommended.
 1. A newly created key has no funds on it. Send funds via transfer to its correspondent addresses
    if you already have funds on a different address, or get it from the faucet at
    [`https://faucet.avax.network`](https://faucet.avax.network/) using your **C-Chain address**.
-   If you already have an AVAX balance greater than zero on Mainnet, 
+   If you already have an AVAX balance greater than zero on Mainnet,
    paste your C-Chain address there, and request test tokens.
-   Otherwise, 
-   please request a faucet coupon on 
+   Otherwise,
+   please request a faucet coupon on
    [Guild](https://guild.xyz/avalanche). Admins and mods on the official [Discord](https://discord.com/invite/RwXY7P6)
    can provide testnet AVAX if developers are unable to obtain it from the other two options.
 
@@ -240,7 +240,7 @@ After following these 3 steps, your test key should now have a balance on the P-
 
 ## Create an EVM Subnet
 
-Creating a Subnet with `Avalanche-CLI` for `Fuji` works the same way as with a local network. 
+Creating a Subnet with `Avalanche-CLI` for `Fuji` works the same way as with a local network.
 In fact,
 the `create` commands only creates a specification of your Subnet on the local file system.
 Afterwards the
@@ -476,7 +476,7 @@ Use the arrow keys to navigate: ↓ ↑ → ←
 This tutorial is about deploying to `Fuji`, so navigate with the arrow keys to `Fuji` and hit enter.
 The user is then asked to provide which private key to use for the deployment. The deployment basically
 consists in running a
-[createSubnet transaction](/reference/avalanchego/p-chain/api.md#platformcreatesubnet). Therefore the
+`createSubnet` transaction. Therefore the
 key needs to have funds.
 
 Also, this tutorial assumes that a node is up running, fully bootstrapped on `Fuji`, and runs
@@ -576,6 +576,8 @@ To request permission to validate a Subnet, the following steps are required:
 
 Before a node can be a validator on a Subnet, the node is required to already be a validator on the
 primary network, which means that your node has **fully bootstrapped**.
+
+If the validator is within 24 hours of expiring on the primary network, it can't be added to the Subnet.
 
 See [here](/nodes/validate/add-a-validator.md#add-a-validator-with-core-extension) on how to
 become a validator.
@@ -712,7 +714,7 @@ To whitelist a node as a recognized validator on the Subnet, run:
 avalanche subnet addValidator testsubnet
 ```
 
-As this operation involves a new transaction, you will need to specify
+As this operation involves another transaction, you will need to specify
 which private key to use:
 
 ```bash
@@ -743,9 +745,7 @@ What is the NodeID of the validator you'd like to whitelist?: NodeID-BFa1paAAAAA
 The next question requires a bit of thinking. A validator has a weight, which defines how often
 consensus selects it for decision making. You should think ahead of how many validators you want
 initially to identify a good value here. The range is 1 to 100, but the minimum for a Subnet without
-any validators yet is 20. The structure is a bit described at
-[addSubnetValidator](/reference/avalanchego/p-chain/api.md#platformaddsubnetvalidator) under the
-`weight` section.
+any validators yet is 20.
 
 Just select 30 for this one:
 
